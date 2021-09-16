@@ -5,7 +5,7 @@ from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.request import CommonRequest
 from aliyunsdkcore.auth.credentials import AccessKeyCredential
 from aliyunsdkcore.auth.credentials import StsTokenCredential
-def ClientServer(accessId,accessSecret)
+def ClientServer(accessId,accessSecret):
     credentials = AccessKeyCredential(accessId, accessSecret)
     client = AcsClient(region_id='cn-hangzhou', credential=credentials)
     return client
