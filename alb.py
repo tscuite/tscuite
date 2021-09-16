@@ -19,7 +19,7 @@ def SetBackendServers(accessId,accessSecret,resource,BackendServers,Weightservic
     request.set_action_name('SetVServerGroupAttribute')
     request.add_query_param('RegionId', "cn-hangzhou")
     request.add_query_param('VServerGroupId', resource)
-    request.add_query_param('BackendServers', "[{ \"ServerId\": \"'"+BackendServers+"'\", \"Type\": \"ecs\", \"Port\":\"80\",\"Weight\": \"'"+Weightservice+"'\"}]")
+    request.add_query_param('BackendServers', "[{ \"ServerId\": \""+BackendServers+"\", \"Type\": \"ecs\", \"Port\":\"80\",\"Weight\": \""+Weightservice+"\"}]")
     client = ClientServer(accessId,accessSecret)
     response = client.do_action(request)
     return response
