@@ -33,3 +33,17 @@ if __name__ == '__main__':
         resource = userInput[2]
         BackendServers = userInput[3]
         Weightservice = userInput[4]
+        if BackendServers == "hostsname1":
+            BackendServers = "ServerId1"
+        if BackendServers == "hostsname2":
+            BackendServers = "ServerId2"
+        if BackendServers == "hostsname3":
+            BackendServers = "ServerId3"
+        if BackendServers == "hostsname4":
+            BackendServers = "ServerId4"
+        if BackendServers == "hostsname5":
+            BackendServers = "ServerId5"
+        if BackendServers == "hostsname6":
+            BackendServers = "ServerId6"
+        slb = SetBackendServers(accessId,accessSecret,resource, BackendServers,Weightservice)
+        print("SLB返回结果为： %s" % str(slb, encoding = 'utf-8'))
