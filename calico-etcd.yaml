@@ -483,6 +483,9 @@ spec:
           hostPath:
             path: /opt/etcd/ssl
             type: Directory
+
+---
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
