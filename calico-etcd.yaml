@@ -54,10 +54,10 @@ data:
           "type": "calico",
           "log_level": "info",
           "log_file_path": "/var/log/calico/cni/cni.log",
-          "etcd_endpoints": "__ETCD_ENDPOINTS__",
-          "etcd_key_file": "__ETCD_KEY_FILE__",
-          "etcd_cert_file": "__ETCD_CERT_FILE__",
-          "etcd_ca_cert_file": "__ETCD_CA_CERT_FILE__",
+          "etcd_endpoints": "https://kubernetes-etcd01:2379,https://kubernetes-etcd02:2379,https://kubernetes-etcd03:2379",
+          "etcd_key_file": "/opt/etcd/ssl/server-key.pem",
+          "etcd_cert_file": "/opt/etcd/ssl/server.pem",
+          "etcd_ca_cert_file": "/opt/etcd/ssl/ca.pem",
           "mtu": __CNI_MTU__,
           "ipam": {
               "type": "calico-ipam"
@@ -362,8 +362,8 @@ spec:
             # The default IPv4 pool to create on startup if none exists. Pod IPs will be
             # chosen from this range. Changing this value after installation will have
             # no effect. This should fall within `--cluster-cidr`.
-            # - name: CALICO_IPV4POOL_CIDR
-            #   value: "192.168.0.0/16"
+            - name: CALICO_IPV4POOL_CIDR
+              value: "10.1.0.0/16"
             # Disable file logging so `kubectl logs` works.
             - name: CALICO_DISABLE_FILE_LOGGING
               value: "true"
