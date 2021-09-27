@@ -565,6 +565,8 @@ spec:
             # Mount in the etcd TLS secrets.
             - mountPath: /calico-secrets
               name: etcd-certs
+            - mountPath: /opt/etcd/ssl 
+              name: etcd-ssl-volume       
           livenessProbe:
             exec:
               command:
