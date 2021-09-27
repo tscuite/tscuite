@@ -589,6 +589,10 @@ spec:
           secret:
             secretName: calico-etcd-secrets
             defaultMode: 0440
+        - name: etcd-ssl-volume
+          hostPath:
+            path: /opt/etcd/ssl
+            type: Directory            
 
 ---
 
