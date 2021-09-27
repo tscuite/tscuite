@@ -431,6 +431,8 @@ spec:
             - name: cni-log-dir
               mountPath: /var/log/calico/cni
               readOnly: true
+            - name: etcd-ssl-volume
+              mountPath: /opt/etcd/ssl
       volumes:
         # Used by calico-node.
         - name: lib-modules
@@ -477,8 +479,10 @@ spec:
           hostPath:
             type: DirectoryOrCreate
             path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/nodeagent~uds
----
-
+        - name: etcd-ssl-volume
+          hostPath:
+            path: /opt/etcd/ssl
+            type: Directory
 apiVersion: v1
 kind: ServiceAccount
 metadata:
