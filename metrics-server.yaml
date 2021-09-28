@@ -100,7 +100,7 @@ metadata:
   name: metrics-server
   namespace: kube-system
 spec:
-  type: NodePort
+  type: NodePort
   ports:
   - name: https
     port: 443
