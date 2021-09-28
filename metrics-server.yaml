@@ -35,6 +35,7 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  - metrics.k8s.io
   resources:
   - pods
   - nodes
