@@ -150,7 +150,7 @@ spec:
         kubernetes.io/os: linux
       containers:
       - name: metrics-server
-        image: k8s.gcr.io/metrics-server/metrics-server:v0.5.1
+        image: registry.cn-hangzhou.aliyuncs.com/google_containers/metrics-server:v0.5.1
         command:
         - /metrics-server
         - --metric-resolution=30s
