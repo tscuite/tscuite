@@ -107,7 +107,6 @@ spec:
     port: 443
     protocol: TCP
     targetPort: https
-    NodePort：30909
   type: NodePort
 
 ---
