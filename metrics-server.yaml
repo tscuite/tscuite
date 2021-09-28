@@ -102,11 +102,12 @@ metadata:
 spec:
   selector:
     k8s-app: metrics-server
-  ports:
+  ports:
   - name: https
     port: 443
-    targetPort: https
     protocol: TCP
+    targetPort: https
+    NodePort：30909
   type: NodePort
 
 ---
