@@ -45,18 +45,6 @@ rules:
   - get
   - list
   - watch
-- apiGroups:
-  - "metrics.k8s.io"
-  resources:
-  - pods
-  - nodes
-  - nodes/stats
-  - namespaces
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -98,7 +86,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: metrics-server
+  name: system:metrics-server
 subjects:
 - kind: ServiceAccount
   name: metrics-server
@@ -146,8 +134,7 @@ spec:
         - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
-        - --kubelet-insecure-tls
-        image: registry.cn-hangzhou.aliyuncs.com/google_containers/metrics-server:v0.5.1
+        image: k8s.gcr.io/metrics-server/metrics-server:v0.5.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
