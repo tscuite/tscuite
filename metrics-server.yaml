@@ -107,8 +107,7 @@ spec:
     port: 443
     protocol: TCP
     targetPort: https
-  type: NodePort
-
+  type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
