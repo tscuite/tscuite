@@ -22,7 +22,6 @@ rules:
   - services
   - pods
   - namespaces
-  - endpointslices
   verbs:
   - list
   - watch
@@ -131,7 +130,7 @@ spec:
         kubernetes.io/os: linux
       containers:
       - name: coredns
-        image: registry.cn-hangzhou.aliyuncs.com/google_containers/coredns:1.8.5
+        image: registry.cn-hangzhou.aliyuncs.com/google_containers/coredns:1.8.0
         imagePullPolicy: IfNotPresent
         resources:
           limits:
