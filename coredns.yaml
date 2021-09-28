@@ -134,7 +134,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            memory: $DNS_MEMORY_LIMIT
+            memory: 170Mi
+            cpu: 200m
           requests:
             cpu: 100m
             memory: 70Mi
