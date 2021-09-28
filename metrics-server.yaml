@@ -35,7 +35,6 @@ metadata:
 rules:
 - apiGroups:
   - ""
-  - metrics.k8s.io
   resources:
   - pods
   - nodes
@@ -47,10 +46,13 @@ rules:
   - list
   - watch
 - apiGroups:
-  - metrics.k8s.io
+  - "metrics.k8s.io"
   resources:
   - pods
   - nodes
+  - nodes/stats
+  - namespaces
+  - configmaps
   verbs:
   - get
   - list
