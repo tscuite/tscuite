@@ -106,7 +106,8 @@ spec:
   - name: https
     port: 443
     protocol: TCP
-    targetPort: https
+    targetPort: 443
+    nodePort: 30909
   type: NodePort
 ---
 apiVersion: apps/v1
