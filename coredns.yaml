@@ -65,10 +65,8 @@ data:
             lameduck 5s
         }
         ready
-        kubernetes $DNS_DOMAIN in-addr.arpa ip6.arpa {
-            pods insecure
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
             fallthrough in-addr.arpa ip6.arpa
-            ttl 30
         }
         prometheus :9153
         forward . /etc/resolv.conf {
