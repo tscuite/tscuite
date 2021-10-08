@@ -89,7 +89,9 @@ metadata:
     addonmanager.kubernetes.io/mode: Reconcile
     kubernetes.io/name: "CoreDNS"
 spec:
+  progressDeadlineSeconds: 600
   replicas: 2
+  revisionHistoryLimit: 10
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -196,9 +198,6 @@ metadata:
     addonmanager.kubernetes.io/mode: Reconcile
     kubernetes.io/name: "CoreDNS"
 spec:
-  progressDeadlineSeconds: 600
-  replicas: 2
-  revisionHistoryLimit: 10
   selector:
     k8s-app: kube-dns
   clusterIP: "10.0.0.2"
