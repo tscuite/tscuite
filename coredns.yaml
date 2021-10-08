@@ -102,6 +102,8 @@ spec:
       k8s-app: kube-dns
   template:
     metadata:
+      annotations:
+        tag: cdz
       labels:
         k8s-app: kube-dns
     spec:
