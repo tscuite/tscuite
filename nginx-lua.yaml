@@ -1,0 +1,122 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: prometheus.moyi
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-deployment
+            port:
+              number: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/tscuite/nginx-lua:1.14.0-3
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/localtime
+          name: localtime
+        - mountPath: /etc/nginx/conf.d
+          name: config-volume
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+          type: ""
+        name: localtime
+      - configMap:
+          defaultMode: 420
+          name: nginx-web
+        name: config-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+spec:
+  ports:
+  - port: 80
+    name: nginx
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+---
+kind: ConfigMap
+metadata:
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+  name: nginx-web
+apiVersion: v1
+data:
+  app.conf: |-
+    server {
+      listen 80;
+      server_name  _;
+      proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+      proxy_set_header Host $host;
+      add_header 'Access-Control-Allow-Origin' '*';
+      add_header 'Access-Control-Allow-Credentials' 'true';
+      add_header 'Access-Control-Allow-Headers' 'Origin, X-Requested-With, Content-Type, Accept';
+      add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+      location / {
+          content_by_lua  '
+                package.cpath = "/usr/local/luajit/lib/lua/5.1/?.so;"
+                local request_method = ngx.var.request_method
+                local arg=nil
+                if request_method == "GET" then
+                         arg = ngx.req.get_uri_args()
+                elseif request_method == "POST" then
+                         ngx.req.read_body()
+                         arg = ngx.req.get_post_args()
+                end;
+                ngx.req.read_body()
+                local data = ngx.req.get_body_data()
+                local cjson = require("cjson")
+                local json = cjson.decode(data)
+                local siteId = json["siteId"]
+                if siteId == 8085 then
+                    ngx.exec("@lua_api_suc")
+                else
+                    ngx.exec("@lua_api_err")
+                end;
+          ';
+      }
+      location @lua_api_suc {
+        content_by_lua_block {
+          ngx.say("转发端口8085")
+        }
+      }
+      location @lua_api_err {
+        content_by_lua_block {
+          ngx.say("转发端口123")
+        }
+      }
+    }
