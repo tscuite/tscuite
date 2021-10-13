@@ -127,25 +127,25 @@ data:
         }
         location /api/admin/cms/create/createStatus {
           if ($arg_siteId = "1"){
-            proxy_pass http://ztgov-sscms-daguan.ztgov-app;
+            proxy_pass http://ztgovsscms7-zhaotong.ztgov-app;
           }
           if ($arg_siteId = "494"){
-            proxy_pass http://ztgov-sscms-daguan.ztgov-app;
+            proxy_pass http://ztgovsscms7-daguan.ztgov-app;
           }
           if ($arg_siteId = "506"){
-           proxy_pass http://ztgov-sscms-daguan.ztgov-app;
+           proxy_pass http://ztgovsscms7-zhaoyang.ztgov-app;
           }
           if ($arg_siteId = "766"){
-            proxy_pass http://ztgov-sscms-daguan.ztgov-app;
+            proxy_pass http://ztgovsscms7-yiliang.ztgov-app;
           }
           if ($arg_siteId = "1164"){
-            proxy_pass http://ztgov-sscms-daguan.ztgov-app;
+            proxy_pass http://ztgovsscms7-yongshan.ztgov-app;
           }
           if ($arg_siteId = "1638"){
-            proxy_pass http://ztgov-sscms-daguan.ztgov-app;
+            proxy_pass http://ztgovsscms7-ludian.ztgov-app;
           }
           if ($arg_siteId = "4410"){
-            proxy_pass http://ztgov-sscms-daguan.ztgov-app;
+            proxy_pass http://ztgovsscms7-suijiang.ztgov-app;
           }
           proxy_pass http://ztgovsscms7.ztgov-app;
         }
