@@ -1,0 +1,108 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: php-nginx
+  name: php-nginx
+  namespace: eda-pre
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php-nginx
+  template:
+    metadata:
+      labels:
+        app: php-nginx
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/tscuite/mysql-proxy:v15
+        name: php
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+          name: php
+        volumeMounts:
+        - mountPath: /etc/localtime
+          name: localtime
+        - mountPath: /etc/nginx/conf.d
+          name: config-volume
+      - image: nginx
+        name: php-nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: php-nginx
+        volumeMounts:
+        - mountPath: /etc/localtime
+          name: localtime
+        - mountPath: /etc/nginx/conf.d
+          name: config-volume
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+          type: ""
+        name: localtime
+      - configMap:
+          defaultMode: 420
+          name: nginx-web
+        name: config-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: php-nginx
+  name: php-nginx
+  namespace: eda-pre
+spec:
+  ports:
+  - port: 80
+    name: php-nginx
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: php-nginx
+---
+kind: ConfigMap
+metadata:
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+  name: nginx-web
+  namespace: eda-pre
+apiVersion: v1
+data:
+  app.conf: |-
+    server {
+      listen 80;
+      server_name  _;
+      keepalive_timeout 100;
+      location ~ \.php$ {
+          root           /var/www/html;
+          fastcgi_pass   localhost:9000;
+          fastcgi_index  index.php;
+          fastcgi_param  SCRIPT_FILENAME  /var/www/html$fastcgi_script_name;
+          include        fastcgi_params;
+      }
+    }
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: php-apache
+  namespace: eda-pre
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: mysql-proxy.自定义.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: php-nginx
+            port:
+              number: 80
