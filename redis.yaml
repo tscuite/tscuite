@@ -125,3 +125,25 @@ spec:
         args:
           - "-f"
           - "/dev/null"
+#  进入redis-trid 
+#  kubectl exec -it -n eda-pre redis-trib-598989ffc6-f6zr9 bash
+#  初始化集群
+#  redis-trib create --replicas 1 \
+#  `dig +short redis-0.redis.eda-pre.svc.cluster.local`:6379 \
+#  `dig +short redis-1.redis.eda-pre.svc.cluster.local`:6379 \
+#  `dig +short redis-2.redis.eda-pre.svc.cluster.local`:6379 \
+#  `dig +short redis-3.redis.eda-pre.svc.cluster.local`:6379 \
+#  `dig +short redis-4.redis.eda-pre.svc.cluster.local`:6379 \
+#  `dig +short redis-5.redis.eda-pre.svc.cluster.local`:6379
+
+
+#springboot集群连接方式
+##  redis:
+##    # 集群配置方式
+##    cluster:
+##      nodes: {your ip1}:{your port1},{your ip2}:{your port2}
+##    password：{your password}
+##    # 对比一下单节点配置方式
+##    host: {your ip}
+##    port: {your port}
+##    password：{your password}
