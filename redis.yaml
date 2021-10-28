@@ -53,6 +53,13 @@ spec:
           - "/etc/redis/redis.conf"
           - "--protected-mode"
           - "no"
+          - --cluster-announce-ip
+          - "$(POD_IP)"
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
         resources: {}
         ports:
             - name: redis
@@ -135,7 +142,6 @@ spec:
 #  `dig +short redis-3.redis.eda-pre.svc.cluster.local`:6379 \
 #  `dig +short redis-4.redis.eda-pre.svc.cluster.local`:6379 \
 #  `dig +short redis-5.redis.eda-pre.svc.cluster.local`:6379
-
 
 #springboot集群连接方式
 ##  redis:
