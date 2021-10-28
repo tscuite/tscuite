@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-configmap 
+  namespace: eda-pre
+data:
+  redis.conf: |
+    appendonly yes
+    protected-mode no
+    cluster-enabled yes          
+    cluster-config-file /var/lib/redis/nodes.conf 
+    cluster-node-timeout 5000    
+    dir /var/lib/redis        
+    port 6379
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: eda-pre
+spec:
+  serviceName: redis
+  replicas: 6
+  selector:
+    matchLabels:
+      app: redis
+      appCluster: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+        appCluster: redis
+    spec:
+      terminationGracePeriodSeconds: 20
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - redis
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: redis
+        image: redis
+        command:
+          - "redis-server"
+        args:
+          - "/etc/redis/redis.conf"
+          - "--protected-mode"
+          - "no"
+        resources: {}
+        ports:
+            - name: redis
+              containerPort: 6379
+              protocol: "TCP"
+            - name: cluster
+              containerPort: 16379
+              protocol: "TCP"
+        volumeMounts:
+          - name: redis-conf
+            mountPath: /etc/redis        
+          - name: redis-data
+            mountPath: /var/lib/redis
+      volumes:
+      - name: redis-conf
+        configMap:
+          name: redis-configmap
+          items:
+            - key: redis.conf
+              path: redis.conf
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: aliyun-nas
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: eda-pre
+  labels:
+    app: redis
+spec:
+  ports:
+  - name: redis-port
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+    appCluster: redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: redis-trib
+  name: redis-trib
+  namespace: eda-pre
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-trib
+  template:
+    metadata:
+      labels:
+        app: redis-trib
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/tscuite/redis-trib:v1
+        name: redis-trib
+        command:
+          - "tail"
+        args:
+          - "-f"
+          - "/dev/null"
