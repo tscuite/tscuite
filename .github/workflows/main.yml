@@ -1,4 +1,4 @@
-on: [push, pull_request, release,pull_request_review]
+on: [push, pull_request, release,pull_request_review,pull_request_review_comment]
 
 name: JumpServer repos generic handler
 
