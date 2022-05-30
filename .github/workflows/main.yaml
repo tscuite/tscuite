@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [opened, closed,reopened]
 
-name: dongtai repos generic handler
+name: dongtai  repos generic handler
 
 jobs:
   generic_handler:
