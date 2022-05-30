@@ -1,5 +1,5 @@
 
-# tscuiteq
+# tscuite
 
 
 #### 介绍
