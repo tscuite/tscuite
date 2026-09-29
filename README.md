@@ -5,10 +5,11 @@
 ---
 
 - 🔭 折腾方向：coding agent、Kubernetes operator、LLM 网关
-- 🔥 [pi-copilot-auto](https://github.com/tscuite/pi-copilot-auto) — pi 扩展：Copilot Auto 模型路由
-- 🔥 [openclaw-autoproxy](https://github.com/tscuite/openclaw-autoproxy) — 大模型 API 代理网关，自动兜底
-- 🔥 [tscuite-operator](https://github.com/tscuite/tscuite-operator) — operator 工具人
+- 🔥 [gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin) — Go + Vue 后台管理系统
+- 🔥 [k9s](https://github.com/derailed/k9s) — Kubernetes 终端 UI
+- 🔥 [dongtai](https://github.com/HXSecurity/DongTai) — 洞态 IAST 安全测试
 - 🔥 [vimrc](https://github.com/tscuite/vimrc) — vim 配置
+- 🔥 [VitaPet](https://github.com/tscuite/VitaPet) — macOS 像素风桌宠
 - 🏠 Blog at [tscuite.github.io](https://tscuite.github.io)
 
 ---
