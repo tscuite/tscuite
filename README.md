@@ -10,7 +10,7 @@
 - 🔥 [dongtai](https://github.com/HXSecurity/DongTai) — 洞态 IAST 安全测试
 - 🔥 [vimrc](https://github.com/tscuite/vimrc) — vim 配置
 - 🔥 [VitaPet](https://github.com/tscuite/VitaPet) — macOS 像素风桌宠
-- 🏠 Blog at [tscuite.github.io](https://tscuite.github.io)
+- 🏠 Blog at [我的博客](https://tscuite.github.io)
 
 ---
 
