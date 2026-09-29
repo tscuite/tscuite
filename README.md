@@ -1,5 +1,7 @@
 ### Hi there 👋
 
+
+<img align="right" width="400px" src="./developer-github.gif" />
 - 🔭 折腾方向：coding agent、Kubernetes operator、大模型 API 网关
 - 🔥 [pi-copilot-auto](https://github.com/tscuite/pi-copilot-auto) — pi 扩展，给内置 github-copilot provider 加 Auto 模型路由
 - 🔥 [openclaw-autoproxy](https://github.com/tscuite/openclaw-autoproxy) — 大模型 API 本地代理网关，OpenAI/Anthropic 兼容 + 自动兜底
